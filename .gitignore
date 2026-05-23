@@ -8,3 +8,9 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Streamlit secrets (local only)
+.streamlit/secrets.toml
+
+# 監視ログ
+monitor.log
