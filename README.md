@@ -2,7 +2,11 @@
 
 A repository for deliberately reproducing the "Oh no. Error running app." state on Streamlit Cloud, used to validate external monitoring scripts.
 
-Deployed at: <https://oh-no-test.streamlit.app/>
+Deployed at: <https://oh-no-page.streamlit.app/>
+
+this may cause:
+
+![Oh no. Error running app.](https://i.imgur.com/kv4a2sg.png)
 
 ## Why this exists
 
@@ -33,10 +37,10 @@ uv run playwright install chromium
 ### Run
 
 ```bash
-# Check this app
-uv run python check.py
+# Pass a Streamlit Cloud subdomain
+uv run python check.py oh-no-page
 
-# Check any Streamlit Cloud app
+# Or pass a full URL
 uv run python check.py https://your-app.streamlit.app/
 ```
 
@@ -45,7 +49,7 @@ The script exits with code 1 on DOWN and appends to `monitor.log`.
 ### cron example
 
 ```cron
-*/5 * * * * cd /path/to/oh-no-test && uv run python check.py
+*/5 * * * * cd /path/to/oh-no-test && uv run python check.py oh-no-page
 ```
 
 ## Toggling app behavior

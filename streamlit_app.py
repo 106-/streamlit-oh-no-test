@@ -4,7 +4,7 @@ import streamlit as st
 HUGE = st.secrets.get("HUGE", False)
 
 if HUGE:
-    # float64 × 625,000,000 ≈ 5 GiB → Streamlit Cloud (1GB上限) でOOM
+    # float64 * 625,000,000 ~= 5 GiB -> OOM on Streamlit Cloud (1 GB limit)
     n = 625_000_000
 else:
     n = 1_000
