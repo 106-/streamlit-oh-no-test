@@ -17,11 +17,22 @@ cron: */5 * * * * cd /path/to/script/oh-no-test && uv run python check.py oh-no-
 import argparse
 import sys
 import asyncio
-import datetime
+import logging
 import pathlib
 from playwright.async_api import async_playwright
 
 LOG = pathlib.Path(__file__).parent / "monitor.log"
+
+logging.basicConfig(
+    level=logging.WARNING,
+    format="%(asctime)s %(levelname)s %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+    handlers=[
+        logging.FileHandler(LOG),
+        logging.StreamHandler(sys.stderr),
+    ],
+)
+logger = logging.getLogger("oh-no-check")
 
 
 def resolve_url(arg: str) -> str:
@@ -63,19 +74,14 @@ async def main():
     )
     args = parser.parse_args()
     url = resolve_url(args.target)
-    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     try:
         status, detail = await check(url)
     except Exception as e:
         status, detail = "DOWN", f"check failed: {type(e).__name__}: {e}"
 
-    line = f"{timestamp} {status}  {url}  {detail}"
-    print(line)
-    with LOG.open("a") as f:
-        f.write(line + "\n")
-
     if status == "DOWN":
+        logger.warning("%s %s", url, detail)
         sys.exit(1)
 
 
