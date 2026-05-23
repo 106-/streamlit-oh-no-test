@@ -11,7 +11,7 @@ resolution-markers = [
 ]
 
 [options]
-exclude-newer = "2026-05-22T16:50:42.808469Z"
+exclude-newer = "2026-05-22T16:58:49.785381Z"
 exclude-newer-span = "P1D"
 
 [[package]]
@@ -384,11 +384,15 @@ name = "oh-no-test"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "numpy" },
     { name = "streamlit" },
 ]
 
 [package.metadata]
-requires-dist = [{ name = "streamlit", specifier = ">=1.57.0" }]
+requires-dist = [
+    { name = "numpy", specifier = ">=2.4.6" },
+    { name = "streamlit", specifier = ">=1.57.0" },
+]
 
 [[package]]
 name = "packaging"
